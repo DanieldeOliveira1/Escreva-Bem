@@ -3,6 +3,8 @@ from tkinter import *
 import pygame
 import cv2
 
+pygame.init()
+
 # INTRODUÇÃO TOP TRENDS EDUCAÇÃO
 intro = cv2.VideoCapture('videos/intro.mp4')
 
@@ -21,8 +23,6 @@ intro.release()
 cv2.destroyAllWindows()
 
 
-pygame.init()
-
 # JANELA E SUAS VARIÁVEIS
 
 janela = Tk()  # CRIAR JANELA
@@ -36,11 +36,16 @@ janela.resizable(width=False, height=False)  # RECONFIGURAR TAMANHO DA JANELA
 janela.configure(bg='white')  # COR DA JANELA
 
 
+
 # MÚSICA DO JOGO
 def musicaJogo():
     pygame.mixer.music.load('sons/musicajogo1.mp3')
     pygame.mixer.music.play(loops=10)
 
+#SAIR DO JOGO
+def quit():
+    pygame.mixer.music.stop()
+    janela.quit()
 
 # BOTÕES DE MUTAR E DESMUTAR
 muteimg = PhotoImage(file='imagens/mute2.png')
@@ -331,7 +336,7 @@ class Menu:
                            bg='#e6ac00', fg='black',
                            activebackground='#b30000',
                            activeforeground='white',
-                           command=janela.quit)
+                           command=quit)
         self.Sair.place(x=250, y=465)
 
         self.logo = PhotoImage(file='imagens/logojogo.png')
