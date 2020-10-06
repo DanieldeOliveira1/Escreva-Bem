@@ -89,6 +89,7 @@ def limparElementos():
 class IniciarJogo:
     def __init__(self, quest):
         limparElementos()
+        pygame.mixer.music.pause()
 
         # BACKGROUND
         self.fundo = PhotoImage(file='imagens/bg.png')
@@ -107,11 +108,11 @@ class IniciarJogo:
         self.errada = 0
 
         # BOTÃO DE AVANÇAR
-        self.avancar = Button(janela,
+        self.avancar = Button(janela, width=7, height=1,
                               text=">>>>>>",
                               bg='white',
                               fg='black',
-                              font=("Arial", 14),
+                              font=("BigNoodleTitling", 22),
                               command=self.Questao)
 
         # TOTAL DE PERGUNTAS
@@ -121,7 +122,7 @@ class IniciarJogo:
 
     # AVANÇAR QUESTÃO
     def Questao(self):
-        self.avancar.place(x=360, y=530)
+        self.avancar.place(x=352, y=510)
 
         # RANDOMIZADOR DE PERGUNTAS
         if len(self.Perguntar) > 0 and self.numero < self.totalPerg:
@@ -150,7 +151,7 @@ class IniciarJogo:
             # ------------------------ CONFIGURAÇÕES DA FRASE DE AUXÍLIO ----------------------- #
 
             Questao = Entry(janela,
-                            font=('Arial', 20, 'bold'),
+                            font=('BigNoodleTitling', 30),
                             bg='white',
                             fg='black',
                             width=45,
@@ -161,50 +162,50 @@ class IniciarJogo:
                          column=0,
                          columnspan=4,
                          pady=4)
-            Questao.place(x=55, y=90)
+            Questao.place(x=60, y=90)
 
             # -------------------------- CONFIGURAÇÕES DOS BOTÕES DE RESPOSTA -------------------------- #
             self.opcao1 = Button(janela,
                                  text=self.alternativa1,
-                                 font=("Arial", 16),
-                                 width=30,  # BOTÃO 1
-                                 height=4,
+                                 font=("BigNoodleTitling", 26),
+                                 width=24,  # BOTÃO 1
+                                 height=2,
                                  command=self.fiscalizar1,
-                                 bg='#ff751a', fg='black')
-            self.opcao1.place(x=15, y=200)
+                                 bg='#e6ac00', fg='black')
+            self.opcao1.place(x=60, y=200)
 
             # ---------------------------------------------------------------------------------------#
 
             self.opcao2 = Button(janela,
                                  text=self.alternativa2,
-                                 font=("Arial", 16),
-                                 width=30,  # BOTÃO 2
-                                 height=4,
+                                 font=("BigNoodleTitling", 26),
+                                 width=24,  # BOTÃO 2
+                                 height=2,
                                  command=self.fiscalizar2,
-                                 bg='#ff751a', fg='black')
+                                 bg='#e6ac00', fg='black')
             self.opcao2.place(x=415, y=200)
 
             # ---------------------------------------------------------------------------------------#
 
             self.opcao3 = Button(janela,
                                  text=self.alternativa3,
-                                 font=("Arial", 16),
-                                 width=30,  # BOTÃO 3
-                                 height=4,
+                                 font=("BigNoodleTitling", 26),
+                                 width=24,  # BOTÃO 3
+                                 height=2,
                                  command=self.fiscalizar3,
-                                 bg='#ff751a', fg='black')
-            self.opcao3.place(x=15, y=320)
+                                 bg='#e6ac00', fg='black')
+            self.opcao3.place(x=60, y=330)
 
             # ---------------------------------------------------------------------------------------#
 
             self.opcao4 = Button(janela,
                                  text=self.alternativa4,
-                                 font=("Arial", 16),
-                                 width=30,  # BOTÃO 4
-                                 height=4,
+                                 font=("BigNoodleTitling", 26),
+                                 width=24,  # BOTÃO 4
+                                 height=2,
                                  command=self.fiscalizar4,
-                                 bg='#ff751a', fg='black')
-            self.opcao4.place(x=415, y=320)
+                                 bg='#e6ac00', fg='black')
+            self.opcao4.place(x=415, y=330)
 
             # ---------------------------------------------------------------------------------------#
 
@@ -220,42 +221,43 @@ class IniciarJogo:
         else:
             limparElementos()
 
-            self.fundo = PhotoImage(file='imagens/bg.png')
-            Label(janela, image=self.fundo).place(relwidth=1, relheight=1)
+            self.white = PhotoImage(file='imagens/resultado.png')
+            Label(janela, image=self.white).place(relwidth=1, relheight=1)
 
             # ----------------------------------- CONFIGURAÇÕES DO RESULTADO ------------------------------------- #
 
             lb = Label(janela, bg='white', fg='black',
-                       text=str(self.correta) + ' QUESTÕES CORRETAS\n' + str(self.errada) + ' QUESTÕES INCORRETAS',
-                       font=("Arial", 30),
+                       text=f'{str(self.correta)}' + f'\n{str(self.errada)}',
+                       font=('BigNoodleTitling', 55),
                        justify='center')
             lb.grid(column=0,
                     row=0,  # CONTADOR DE CORRETAS E INCORRETAS
-                    padx=130,
-                    pady=(170, 15))
+                    padx=50,
+                    pady=(188, 15))
 
             # --------------------------------------------------------------------------------------------------- #
 
             btmenu = Button(janela,
-                            text="MENU",
-                            bg='#ff751a',
-                            font=("Arial", 20),
+                            text="RETORNAR",
+                            bg='#bfbfbf',
+                            font=('BigNoodleTitling', 25),
                             command=criarMenu)  # BOTÃO DE VOLTAR AO MENU
             btmenu.grid(column=0,
                         row=1,
                         pady=150)
+            btmenu.place(x=350, y=500)
 
             # --------------------------------------------------------------------------------------------------- #
 
     def fiscalizar1(self):
         if not self.travar:
             if self.proxQuest != self.alternativa1:
-                self.opcao1.configure(bg='#b30000')
+                self.opcao1.configure(bg='#b30000', fg='#f2f2f2')
                 pygame.mixer.music.load('sons/errado.mp3')
                 pygame.mixer.music.play()
                 self.errada += 1
             else:
-                self.opcao1.configure(bg='#006622')
+                self.opcao1.configure(bg='#006622', fg='#f2f2f2')
                 pygame.mixer.music.load('sons/correto.mp3')
                 pygame.mixer.music.play()
                 self.correta += 1
@@ -265,12 +267,12 @@ class IniciarJogo:
     def fiscalizar2(self):
         if not self.travar:
             if self.proxQuest != self.alternativa2:
-                self.opcao2.configure(bg='#b30000')
+                self.opcao2.configure(bg='#b30000', fg='#f2f2f2')
                 pygame.mixer.music.load('sons/errado.mp3')
                 pygame.mixer.music.play()
                 self.errada += 1
             else:
-                self.opcao2.configure(bg='#006622')
+                self.opcao2.configure(bg='#006622', fg='#f2f2f2')
                 pygame.mixer.music.load('sons/correto.mp3')
                 pygame.mixer.music.play()
                 self.correta += 1
@@ -280,12 +282,12 @@ class IniciarJogo:
     def fiscalizar3(self):
         if not self.travar:
             if self.proxQuest != self.alternativa3:
-                self.opcao3.configure(bg='#b30000')
+                self.opcao3.configure(bg='#b30000', fg='#f2f2f2')
                 pygame.mixer.music.load('sons/errado.mp3')
                 pygame.mixer.music.play()
                 self.errada += 1
             else:
-                self.opcao3.configure(bg='#006622')
+                self.opcao3.configure(bg='#006622', fg='#f2f2f2')
                 pygame.mixer.music.load('sons/correto.mp3')
                 pygame.mixer.music.play()
                 self.correta += 1
@@ -295,12 +297,12 @@ class IniciarJogo:
     def fiscalizar4(self):
         if not self.travar:
             if self.proxQuest != self.alternativa4:
-                self.opcao4.configure(bg='#b30000')
+                self.opcao4.configure(bg='#b30000', fg='#f2f2f2')
                 pygame.mixer.music.load('sons/errado.mp3')
                 pygame.mixer.music.play()
                 self.errada += 1
             else:
-                self.opcao4.configure(bg='#006622')
+                self.opcao4.configure(bg='#006622', fg='#f2f2f2')
                 pygame.mixer.music.load('sons/correto.mp3')
                 pygame.mixer.music.play()
                 self.correta += 1
@@ -321,8 +323,8 @@ class Menu:
         # ------------------------------------ BOTÃO DE INICIAR ------------------------------------ #
 
         self.Iniciar = Button(janela, text="INICIAR",
-                              padx=30, pady=30, width=20,
-                              font=('Arial', 15, 'bold'),
+                              padx=17, pady=19, width=20,
+                              font=('BigNoodleTitling', 26),
                               bg='#e6ac00', fg='black',
                               activebackground='#006622',
                               activeforeground='white', command=self.criarQuiz)
@@ -331,8 +333,8 @@ class Menu:
         # ------------------------------------- BOTÃO DE SAIR ------------------------------------- #
 
         self.Sair = Button(janela, text='SAIR', width=20,
-                           padx=30, pady=30,
-                           font=('Arial', 15, 'bold'),
+                           padx=17, pady=19,
+                           font=('BigNoodleTitling', 26),
                            bg='#e6ac00', fg='black',
                            activebackground='#b30000',
                            activeforeground='white',
