@@ -12,7 +12,6 @@ while intro.isOpened():
     ret, janela = intro.read()
 
     if ret:
-
         cv2.imshow('ESCREVA BEM', janela)
 
         if cv2.waitKey(25) & 0xFF == ord('q'):
@@ -22,20 +21,19 @@ while intro.isOpened():
 intro.release()
 cv2.destroyAllWindows()
 
-
 # JANELA E SUAS VARIÁVEIS
 
 janela = Tk()  # CRIAR JANELA
 
 janela.title("ESCREVA BEM")  # TÍTULO DA JANELA
 
+janela.iconbitmap('imagens/logojogo.ico') # ÍCONE DA JANELA
+
 janela.geometry("800x600+275+50")  # TAMANHO E POSIÇÃO DA JANELA
 
 janela.resizable(width=False, height=False)  # RECONFIGURAR TAMANHO DA JANELA
 
 janela.configure(bg='white')  # COR DA JANELA
-
-
 
 # MÚSICA DO JOGO
 def musicaJogo():
@@ -48,22 +46,20 @@ def quit():
     janela.quit()
 
 # BOTÕES DE MUTAR E DESMUTAR
-muteimg = PhotoImage(file='imagens/mute2.png')
+muteimg = PhotoImage(file='imagens/desmute2.png')
 label3 = Label(janela, image=muteimg)
 label3.pack()
 label3.place(x=5, y=6)
 
-desmuteimg = PhotoImage(file='imagens/desmute2.png')
+desmuteimg = PhotoImage(file='imagens/mute2.png')
 label4 = Label(janela, image=desmuteimg)
 label4.pack()
 label4.place(x=5, y=6)
-
 
 def mutar():
     pygame.mixer.music.pause()
     desmute = Button(janela, image=desmuteimg, bg='white', command=desmutar)
     desmute.place(x=5, y=6)
-
 
 def desmutar():
     pygame.mixer.music.unpause()
@@ -77,13 +73,11 @@ questoes = [["IREI AO RESTAURANTE...", "ALMOSSAR", "AUMOÇAR", "AUMOSSAR", "ALMO
             ["VOU DAR UM PASSEIO DE...", "BICECLETA", "BECICLETA", "BECECLETA", "BICICLETA"],
             ["É SEMPRE UM ... RECEBÊ-LO(A) EM MINHA CASA!", "PRASER", "PRAZÊ", "PRASÊ", "PRAZER"]]
 
-
 # REMOVER ELEMENTOS DA JANELA
 def limparElementos():
     elementos = janela.grid_slaves()
     for e in elementos:
         e.destroy()
-
 
 # INICIAR JOGO
 class IniciarJogo:
@@ -165,13 +159,16 @@ class IniciarJogo:
             Questao.place(x=60, y=90)
 
             # -------------------------- CONFIGURAÇÕES DOS BOTÕES DE RESPOSTA -------------------------- #
-            self.opcao1 = Button(janela,
+            self.botaoRedondado = PhotoImage(file="")
+            self.style = ttk.Style()
+            self.style.configure("BW.TButton", relwidth=1, relheight=1, foreground='black', borderwidth=0,
+                                 bordercolor= 'gray', background= '#dfe3ee')
+
+            self.opcao1 = ttk.Button(janela,
                                  text=self.alternativa1,
-                                 font=("BigNoodleTitling", 26),
-                                 width=24,  # BOTÃO 1
-                                 height=2,
+                                 font=("BigNoodleTitling", 26), #BOTÃO 1                                                                      # BOTÃO 1
                                  command=self.fiscalizar1,
-                                 bg='#e6ac00', fg='black')
+                                 style = "BW.TButton")
             self.opcao1.place(x=60, y=200)
 
             # ---------------------------------------------------------------------------------------#
@@ -217,7 +214,7 @@ class IniciarJogo:
                 self.BtProxQuestao = self.opcao3
             elif self.alternativa4 == self.proxQuest:
                 self.BtProxQuestao = self.opcao4
-            self.Perguntar.pop(NumAleatorio)
+                self.Perguntar.pop(NumAleatorio)
         else:
             limparElementos()
 
@@ -309,7 +306,6 @@ class IniciarJogo:
             self.BtProxQuestao.configure(bg='#006622')
             self.travar = True
 
-
 # MENU
 class Menu:
     def __init__(self):
@@ -350,13 +346,11 @@ class Menu:
         self.Sair.destroy()
         q = IniciarJogo(questoes)
 
-
 # FUNÇÃO PARA CRIAR O MENU
 def criarMenu():
     musicaJogo()
 
     m = Menu()
-
 
 criarMenu()
 janela.mainloop()
