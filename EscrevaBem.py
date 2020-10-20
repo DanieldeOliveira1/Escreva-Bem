@@ -103,9 +103,9 @@ class IniciarJogo:
 
         # BOTÃO DE AVANÇAR
         self.avancar = Button(janela, width=7, height=1,
-                              text=">>>>>>",
-                              bg='white',
-                              fg='black',
+                              text="Próxima",
+                              bg='blue',
+                              fg='white',
                               font=("BigNoodleTitling", 22),
                               command=self.Questao)
 
@@ -159,16 +159,13 @@ class IniciarJogo:
             Questao.place(x=60, y=90)
 
             # -------------------------- CONFIGURAÇÕES DOS BOTÕES DE RESPOSTA -------------------------- #
-            self.botaoRedondado = PhotoImage(file="")
-            self.style = ttk.Style()
-            self.style.configure("BW.TButton", relwidth=1, relheight=1, foreground='black', borderwidth=0,
-                                 bordercolor= 'gray', background= '#dfe3ee')
-
-            self.opcao1 = ttk.Button(janela,
+            self.opcao1 = Button(janela,
                                  text=self.alternativa1,
-                                 font=("BigNoodleTitling", 26), #BOTÃO 1                                                                      # BOTÃO 1
+                                 font=("BigNoodleTitling", 26),
+                                 width=24,  # BOTÃO 1
+                                 height=2,
                                  command=self.fiscalizar1,
-                                 style = "BW.TButton")
+                                 bg='#e6ac00', fg='black')
             self.opcao1.place(x=60, y=200)
 
             # ---------------------------------------------------------------------------------------#
@@ -306,6 +303,14 @@ class IniciarJogo:
             self.BtProxQuestao.configure(bg='#006622')
             self.travar = True
 
+# ADICIONAR PERGUNTAS
+class Adicionar:
+    def __init__(self):
+        limparElementos()
+        questoes = []
+        for add in range():
+            questoes1.append(input('Adicione uma pergunta: '))
+
 # MENU
 class Menu:
     def __init__(self):
@@ -341,10 +346,19 @@ class Menu:
         self.label2 = Label(janela, image=self.logo)
         self.label2.place(x=250, y=30)
 
+        # -------------------------------------- BOTÃO MENU -----------------------------------------#
+        menuu = Button(janela, text='Menu', bg='white', command=self.criarQuiz2)
+        menuu.place(x=755, y=6)
+
     def criarQuiz(self):
         self.label2.destroy()
         self.Sair.destroy()
         q = IniciarJogo(questoes)
+
+    def criarQuiz2(self):
+        self.label2.destroy()
+        self.Sair.destroy()
+        m = Adicionar(questoes1)
 
 # FUNÇÃO PARA CRIAR O MENU
 def criarMenu():
