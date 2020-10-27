@@ -29,6 +29,8 @@ janela = Tk()  # CRIAR JANELA
 
 janela.title("ESCREVA BEM")  # TÍTULO DA JANELA
 
+janela.iconbitmap('imagens/logojogo.ico')  # ÍCONE DA JANELA
+
 janela.geometry("800x600+275+50")  # TAMANHO E POSIÇÃO DA JANELA
 
 janela.resizable(width=False, height=False)  # RECONFIGURAR TAMANHO DA JANELA
@@ -48,12 +50,12 @@ def quit():
     janela.quit()
 
 # BOTÕES DE MUTAR E DESMUTAR
-muteimg = PhotoImage(file='imagens/mute2.png')
+muteimg = PhotoImage(file='imagens/mute3.png')
 label3 = Label(janela, image=muteimg)
 label3.pack()
 label3.place(x=5, y=6)
 
-desmuteimg = PhotoImage(file='imagens/desmute2.png')
+desmuteimg = PhotoImage(file='imagens/desmute3.png')
 label4 = Label(janela, image=desmuteimg)
 label4.pack()
 label4.place(x=5, y=6)
@@ -61,13 +63,15 @@ label4.place(x=5, y=6)
 
 def mutar():
     pygame.mixer.music.pause()
-    desmute = Button(janela, image=desmuteimg, bg='white', command=desmutar)
+    desmute = Button(janela, image=desmuteimg, bg='black',
+                     activebackground='black', command=desmutar)
     desmute.place(x=5, y=6)
 
 
 def desmutar():
     pygame.mixer.music.unpause()
-    mute = Button(janela, image=muteimg, bg='white', command=mutar)
+    mute = Button(janela, image=muteimg, bg='black',
+                  activebackground='black', command=mutar)
     mute.place(x=5, y=6)
 
 # DEPÓSITO DE PERGUNTAS
@@ -109,9 +113,9 @@ class IniciarJogo:
 
         # BOTÃO DE AVANÇAR
         self.avancar = Button(janela, width=7, height=1,
-                              text=">>>>>>",
-                              bg='white',
-                              fg='black',
+                              text="PRÓXIMA",
+                              bg='#0099ff',
+                              fg='white',
                               font=("BigNoodleTitling", 22),
                               command=self.Questao)
 
@@ -314,7 +318,7 @@ class IniciarJogo:
 class Menu:
     def __init__(self):
         limparElementos()
-        self.fundo = PhotoImage(file='imagens/bg.png')
+        self.fundo = PhotoImage(file='imagens/menu.png')
         Label(janela, image=self.fundo).place(relwidth=1, relheight=1)
 
         mutar()
@@ -328,7 +332,7 @@ class Menu:
                               bg='#e6ac00', fg='black',
                               activebackground='#006622',
                               activeforeground='white', command=self.criarQuiz)
-        self.Iniciar.grid(column=0, row=0, padx=250, pady=350)
+        self.Iniciar.place(x=420, y=100)
 
         # ------------------------------------- BOTÃO DE SAIR ------------------------------------- #
 
@@ -339,14 +343,44 @@ class Menu:
                            activebackground='#b30000',
                            activeforeground='white',
                            command=quit)
-        self.Sair.place(x=250, y=465)
+        self.Sair.place(x=420, y=380)
 
-        self.logo = PhotoImage(file='imagens/logojogo.png')
-        self.label2 = Label(janela, image=self.logo)
-        self.label2.place(x=250, y=30)
+        self.Personalizar = Button(janela, text='Personalizar', width=20,
+                           padx=17, pady=19,
+                           font=('BigNoodleTitling', 26),
+                           bg='#e6ac00', fg='black',
+                           activebackground='purple',
+                           activeforeground='white')
+        self.Personalizar.place(x=420, y=240)
+
+
+        self.Sair.bind('<Enter>', self.hover)
+        self.Sair.bind('<Leave>', self.hover_leave)
+        self.Iniciar.bind('<Enter>', self.hover2)
+        self.Iniciar.bind('<Leave>', self.hover_leave2)
+        self.Personalizar.bind('<Enter>', self.hover3)
+        self.Personalizar.bind('<Leave>', self.hover_leave3)
+
+    def hover(self, e):
+        self.Sair.configure(bg='white')
+
+    def hover_leave(self, e):
+        self.Sair.configure(bg='#e6ac00')
+
+    def hover2(self, e):
+        self.Iniciar.configure(bg='white')
+
+    def hover_leave2(self, e):
+        self.Iniciar.configure(bg='#e6ac00')
+
+    def hover3(self, e):
+        self.Personalizar.configure(bg='white')
+
+    def hover_leave3(self, e):
+        self.Personalizar.configure(bg='#e6ac00')
+
 
     def criarQuiz(self):
-        self.label2.destroy()
         self.Sair.destroy()
         q = IniciarJogo(questoes)
 
