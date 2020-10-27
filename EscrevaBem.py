@@ -365,6 +365,3 @@ def criarMenu():
     musicaJogo()
 
     m = Menu()
-
-criarMenu()
-janela.mainloop()
