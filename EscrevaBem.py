@@ -705,6 +705,11 @@ class Menu:
         else:
             questoes.append(self.novas)
             messagebox.showinfo("SUCESSO", "QUESTÃO ADICIONADA COM SUCESSO!", parent=self.janelap)
+            self.box1.delete(0, END)
+            self.box2.delete(0, END)
+            self.box3.delete(0, END)
+            self.box4.delete(0, END)
+            self.box5.delete(0, END)
 
     def criarQuiz(self):
         self.janelao.destroy()
@@ -712,6 +717,7 @@ class Menu:
 
     def criarQuiz2(self):
         self.janela1.destroy()
+        self.janela2.destroy()
         q = IniciarJogo(questoes)
 
     def delete(self):
