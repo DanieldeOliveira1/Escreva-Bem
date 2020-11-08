@@ -499,6 +499,8 @@ class Menu:
         self.entry_senha = Entry(self.janela2, width=50)
         self.entry_senha.place(x=250, y=165)
 
+        # ----------------------------------------- BOTÃO DE LOGIN ---------------------------------------- #
+
         self.blogin = Button(self.janela2, text="LOGIN",
                                       padx=17, pady=19, width=20,
                                       font=('BigNoodleTitling', 26),
@@ -507,6 +509,8 @@ class Menu:
                                       activeforeground='white', command=self.mestre)
         self.blogin.place(x=250, y=230)
 
+        # ----------------------------------------- BOTÃO DE CADASTRO ---------------------------------------- #
+
         self.bcadastro = Button(self.janela2, text="FAÇA SEU CADASTRO",
                                       padx=17, pady=19, width=20,
                                       font=('BigNoodleTitling', 26),
@@ -514,6 +518,8 @@ class Menu:
                                       activebackground='#660080',
                                       activeforeground='white', command=self.cadastro)
         self.bcadastro.place(x=250, y=355)
+
+        # ----------------------------------------- BOTÃO DE VOLTAR ---------------------------------------- #
 
         self.bvoltar = Button(self.janela2, text="VOLTAR",
                                       padx=17, pady=19, width=20,
@@ -550,6 +556,7 @@ class Menu:
         self.entry_senha = Entry(self.janela3, width=50)
         self.entry_senha.place(x=250, y=265)
 
+        # ----------------------------------------- BOTÃO DE CADASTRAR ---------------------------------------- #
 
         self.bcadastrar = Button(self.janela3, text="CADASTRAR",
                              padx=17, pady=19, width=20,
@@ -558,6 +565,8 @@ class Menu:
                              activebackground='#660080',
                              activeforeground='white')
         self.bcadastrar.place(x=250, y=320)
+
+        # ----------------------------------------- BOTÃO DE VOLTAR ---------------------------------------- #
 
         self.bvolte = Button(self.janela3, text="VOLTAR",
                                 padx=17, pady=19, width=20,
@@ -568,7 +577,6 @@ class Menu:
         self.bvolte.place(x=250, y=450)
 
         # ------------------------------------- BOTÃO DE PRSONALIZAR ------------------------------------- #
-
 
     def adicionarQuestoes(self):
         self.janelap = Tk()
