@@ -2,6 +2,7 @@ import random
 from tkinter import *
 import pygame
 import cv2
+from tkinter import messagebox
 
 pygame.init()
 
@@ -13,7 +14,6 @@ while intro.isOpened():
 
     if ret:
         cv2.imshow('ESCREVA BEM', janela)
-
         if cv2.waitKey(25) & 0xFF == ord('q'):
             break
     else:
@@ -46,32 +46,32 @@ def quit():
     janela.quit()
 
 # BOTÕES DE MUTAR E DESMUTAR
-muteimg = PhotoImage(file='imagens/desmute2.png')
+muteimg = PhotoImage(file='imagens/desmute3.png')
 label3 = Label(janela, image=muteimg)
 label3.pack()
 label3.place(x=5, y=6)
 
-desmuteimg = PhotoImage(file='imagens/mute2.png')
+desmuteimg = PhotoImage(file='imagens/mute3.png')
 label4 = Label(janela, image=desmuteimg)
 label4.pack()
 label4.place(x=5, y=6)
 
 def mutar():
     pygame.mixer.music.pause()
-    desmute = Button(janela, image=desmuteimg, bg='white', command=desmutar)
+    desmute = Button(janela, image=desmuteimg, bg='black', command=desmutar)
     desmute.place(x=5, y=6)
 
 def desmutar():
     pygame.mixer.music.unpause()
-    mute = Button(janela, image=muteimg, bg='white', command=mutar)
+    mute = Button(janela, image=muteimg, bg='black', command=mutar)
     mute.place(x=5, y=6)
 
 # DEPÓSITO DE PERGUNTAS
 questoes = [["IREI AO RESTAURANTE...", "ALMOSSAR", "AUMOÇAR", "AUMOSSAR", "ALMOÇAR"],
-            ["IREI CONTATAR MEU...", "ADEVOGADO", "ADIVOGADO", "ADIVOGADU", "ADVOGADO"],
-            ["COMPREI 200 GRAMAS DE...", "MORTADELLA", "MORTANDELA", "MOTADELA", "MORTADELA"],
-            ["VOU DAR UM PASSEIO DE...", "BICECLETA", "BECICLETA", "BECECLETA", "BICICLETA"],
-            ["É SEMPRE UM ... RECEBÊ-LO(A) EM MINHA CASA!", "PRASER", "PRAZÊ", "PRASÊ", "PRAZER"]]
+                ["IREI CONTATAR MEU...", "ADEVOGADO", "ADIVOGADO", "ADIVOGADU", "ADVOGADO"],
+                ["COMPREI 200 GRAMAS DE...", "MORTADELLA", "MORTANDELA", "MOTADELA", "MORTADELA"],
+                ["VOU DAR UM PASSEIO DE...", "BICECLETA", "BECICLETA", "BECECLETA", "BICICLETA"],
+                ["É SEMPRE UM ... RECEBÊ-LO(A) EM MINHA CASA!", "PRASER", "PRAZÊ", "PRASÊ", "PRAZER"]]
 
 # REMOVER ELEMENTOS DA JANELA
 def limparElementos():
@@ -304,32 +304,26 @@ class IniciarJogo:
             self.travar = True
 
 # ADICIONAR PERGUNTAS
-class Adicionar:
-    def __init__(self):
-        limparElementos()
-        questoes = []
-        for add in range():
-            questoes1.append(input('Adicione uma pergunta: '))
 
 # MENU
 class Menu:
     def __init__(self):
         limparElementos()
-        self.fundo = PhotoImage(file='imagens/bg.png')
+        self.fundo = PhotoImage(file='imagens/menu.png')
         Label(janela, image=self.fundo).place(relwidth=1, relheight=1)
 
         mutar()
         desmutar()
 
-        # ------------------------------------ BOTÃO DE INICIAR ------------------------------------ #
+        # ------------------------------------ BOTÃO DE JOGADOR ------------------------------------ #
 
-        self.Iniciar = Button(janela, text="INICIAR",
+        self.Opcao1 = Button(janela, text="JOGADOR",
                               padx=17, pady=19, width=20,
                               font=('BigNoodleTitling', 26),
                               bg='#e6ac00', fg='black',
                               activebackground='#006622',
-                              activeforeground='white', command=self.criarQuiz)
-        self.Iniciar.grid(column=0, row=0, padx=250, pady=350)
+                              activeforeground='white', command=self.selecionarJogador)
+        self.Opcao1.grid(column=0, row=0, padx=420, pady=170)
 
         # ------------------------------------- BOTÃO DE SAIR ------------------------------------- #
 
@@ -339,29 +333,388 @@ class Menu:
                            bg='#e6ac00', fg='black',
                            activebackground='#b30000',
                            activeforeground='white',
-                           command=quit)
-        self.Sair.place(x=250, y=465)
+                           command=janela.destroy)
+        self.Sair.place(x=420, y=330)
 
-        self.logo = PhotoImage(file='imagens/logojogo.png')
-        self.label2 = Label(janela, image=self.logo)
-        self.label2.place(x=250, y=30)
+        self.Sair.bind('<Enter>', self.hover)
+        self.Sair.bind('<Leave>', self.hover_leave)
 
-        # -------------------------------------- BOTÃO MENU -----------------------------------------#
-        menuu = Button(janela, text='Menu', bg='white', command=self.criarQuiz2)
-        menuu.place(x=755, y=6)
+        self.Opcao1.bind('<Enter>', self.hover5)
+        self.Opcao1.bind('<Leave>', self.hover_leave5)
+
+    def hover(self, e):
+        self.Sair.configure(bg='white')
+    def hover_leave(self, e):
+        self.Sair.configure(bg='#e6ac00')
+
+    def hover5(self, e):
+        self.Opcao1.configure(bg='white')
+    def hover_leave5(self, e):
+        self.Opcao1.configure(bg='#e6ac00')
+
+    def selecionarJogador(self):
+        self.janelao = Tk()
+        self.janelao.iconbitmap('imagens/logojogo.ico')
+        self.janelao.geometry('800x600+275+50')
+        self.janelao.title('JOGADOR')
+        self.janelao.resizable(width=False, height=False)
+
+        labelPerg = Label(self.janelao, text='ESCOLHA A OPÇÃO DE JOGADOR',
+                          font=('BigNoodleTitling', 40))
+        labelPerg.place(x=170, y=15)
+
+        # ------------------------------------  BOTÃO DE PROFESSOR  ----------------------------------- #
+
+        self.Professor = Button(self.janelao, text="PROFESSOR",
+                              padx=17, pady=19, width=20,
+                              font=('BigNoodleTitling', 26),
+                              bg='#e6ac00', fg='black',
+                              activebackground='#006622',
+                              activeforeground='white', command=self.login)
+        self.Professor.place(x=250,y=120)
+
+        # -------------------------------------   BOTÃO DE ALUNO   ------------------------------------ #
+
+        self.Aluno= Button(self.janelao, text="ALUNO",
+                              padx=17, pady=19, width=20,
+                              font=('BigNoodleTitling', 26),
+                              bg='#e6ac00', fg='black',
+                              activebackground='#006622',
+                              activeforeground='white', command=self.criarQuiz)
+        self.Aluno.place(x=250,y=270)
+
+        # ------------------------------------   BOTÃO DE VOLTAR   ------------------------------------- #
+
+        self.Voltar = Button(self.janelao, text="VOLTAR",
+                              padx=17, pady=19, width=20,
+                              font=('BigNoodleTitling', 26),
+                              bg='#e6ac00', fg='black',
+                              activebackground='#006622',
+                              activeforeground='white', command=self.janelao.destroy)
+        self.Voltar.place(x=250,y=420)
+
+        self.Professor.bind('<Enter>', self.hover7)
+        self.Professor.bind('<Leave>', self.hover_leave7)
+
+        self.Aluno.bind('<Enter>', self.hover8)
+        self.Aluno.bind('<Leave>', self.hover_leave8)
+
+        self.Voltar.bind('<Enter>', self.hover9)
+        self.Voltar.bind('<Leave>', self.hover_leave9)
+
+    def hover7(self, e):
+        self.Professor.configure(bg='white')
+    def hover_leave7(self, e):
+        self.Professor.configure(bg='#e6ac00')
+
+    def hover8(self, e):
+        self.Aluno.configure(bg='white')
+    def hover_leave8(self, e):
+        self.Aluno.configure(bg='#e6ac00')
+
+    def hover9(self, e):
+        self.Voltar.configure(bg='white')
+    def hover_leave9(self, e):
+        self.Voltar.configure(bg='#e6ac00')
+
+    def mestre(self):
+        self.janelao.destroy()
+        self.janela1 = Tk()
+        self.janela1.iconbitmap('imagens/logojogo.ico')
+        self.janela1.geometry('800x600+275+50')
+        self.janela1.title('PROFESSOR')
+        self.janela1.resizable(width=False, height=False)
+
+        self.BotPersonalizar = Button(self.janela1, text="PERSONALIZAR",
+                                      padx=17, pady=19, width=20,
+                                      font=('BigNoodleTitling', 26),
+                                      bg='#e6ac00', fg='black',
+                                      activebackground='#660080',
+                                      activeforeground='white', command=self.adicionarQuestoes)
+        self.BotPersonalizar.place(x=420, y=100)
+
+        # --------------------------------------- BOTÃO DE INCIAR ---------------------------------------- #
+
+        self.Iniciar = Button(self.janela1, text="INICIAR",
+                              padx=17, pady=19, width=20,
+                              font=('BigNoodleTitling', 26),
+                              bg='#e6ac00', fg='black',
+                              activebackground='#006622',
+                              activeforeground='white', command=self.criarQuiz2)
+        self.Iniciar.place(x=420, y=250)
+
+        # ----------------------------------------- BOTÃO DE SAIR ---------------------------------------- #
+
+        self.Sair1 = Button(self.janela1, text='SAIR', width=20,
+                            padx=17, pady=19,
+                            font=('BigNoodleTitling', 26),
+                            bg='#e6ac00', fg='black',
+                            activebackground='#b30000',
+                            activeforeground='white',
+                            command=self.delete)
+        self.Sair1.place(x=420, y=400)
+
+        self.BotPersonalizar.bind('<Enter>', self.hover6)
+        self.BotPersonalizar.bind('<Leave>', self.hover_leave6)
+
+        self.Iniciar.bind('<Enter>', self.hover2)
+        self.Iniciar.bind('<Leave>', self.hover_leave2)
+
+        self.Sair1.bind('<Enter>', self.hover1)
+        self.Sair1.bind('<Leave>', self.hover_leave1)
+
+    def hover6(self, e):
+        self.BotPersonalizar.configure(bg='white')
+
+    def hover_leave6(self, e):
+        self.BotPersonalizar.configure(bg='#e6ac00')
+
+    def hover2(self, e):
+        self.Iniciar.configure(bg='white')
+
+    def hover_leave2(self, e):
+        self.Iniciar.configure(bg='#e6ac00')
+
+    def hover1(self, e):
+        self.Sair1.configure(bg='white')
+
+    def hover_leave1(self, e):
+        self.Sair1.configure(bg='#e6ac00')
+
+    def login(self):
+        self.janela2 = Tk()
+        self.janela2.iconbitmap('imagens/logojogo.ico')
+        self.janela2.geometry('800x600+275+50')
+        self.janela2.title('LOGIN')
+        self.janela2.resizable(width=False, height=False)
+
+        self.label_prof = Label(self.janela2, text='PROFESSOR', font=('BigNoodleTitling', 36))
+        self.label_prof.place(x= 320, y=10)
+        self.label_login = Label(self.janela2, text='Login:', font=('BigNoodleTitling', 26))
+        self.label_login.place(x=160, y=100)
+        self.entry_login = Entry(self.janela2, width=50)
+        self.entry_login.place(x=250, y=115)
+        self.label_senha = Label(self.janela2, text='Senha:', font=('BigNoodleTitling', 26))
+        self.label_senha.place(x=160, y=150)
+        self.entry_senha = Entry(self.janela2, width=50)
+        self.entry_senha.place(x=250, y=165)
+
+        self.blogin = Button(self.janela2, text="LOGIN",
+                                      padx=17, pady=19, width=20,
+                                      font=('BigNoodleTitling', 26),
+                                      bg='#e6ac00', fg='black',
+                                      activebackground='#660080',
+                                      activeforeground='white', command=self.mestre)
+        self.blogin.place(x=250, y=230)
+
+        self.bcadastro = Button(self.janela2, text="FAÇA SEU CADASTRO",
+                                      padx=17, pady=19, width=20,
+                                      font=('BigNoodleTitling', 26),
+                                      bg='#e6ac00', fg='black',
+                                      activebackground='#660080',
+                                      activeforeground='white', command=self.cadastro)
+        self.bcadastro.place(x=250, y=355)
+
+        self.bvoltar = Button(self.janela2, text="VOLTAR",
+                                      padx=17, pady=19, width=20,
+                                      font=('BigNoodleTitling', 26),
+                                      bg='#e6ac00', fg='black',
+                                      activebackground='#660080',
+                                      activeforeground='white', command=self.janela2.destroy)
+        self.bvoltar.place(x=250, y=480)
+
+    def cadastro(self):
+        self.janela2.destroy()
+        self.janela3 = Tk()
+        self.janela3.iconbitmap('imagens/logojogo.ico')
+        self.janela3.geometry('800x600+275+50')
+        self.janela3.title('LOGIN')
+        self.janela3.resizable(width=False, height=False)
+
+        self.label_prof = Label(self.janela3, text='PROFESSOR', font=('BigNoodleTitling', 36))
+        self.label_prof.place(x=320, y=10)
+        self.label_login = Label(self.janela3, text='NOME:', font=('BigNoodleTitling', 26))
+        self.label_login.place(x=160, y=100)
+        self.entry_login = Entry(self.janela3, width=50)
+        self.entry_login.place(x=250, y=115)
+        self.label_senha = Label(self.janela3, text='CPF:', font=('BigNoodleTitling', 26))
+        self.label_senha.place(x=160, y=150)
+        self.entry_senha = Entry(self.janela3, width=50)
+        self.entry_senha.place(x=250, y=165)
+        self.label_login = Label(self.janela3, text='CFEP:', font=('BigNoodleTitling', 26))
+        self.label_login.place(x=160, y=200)
+        self.entry_login = Entry(self.janela3, width=50)
+        self.entry_login.place(x=250, y=215)
+        self.label_senha = Label(self.janela3, text='EMAIL:', font=('BigNoodleTitling', 26))
+        self.label_senha.place(x=160, y=250)
+        self.entry_senha = Entry(self.janela3, width=50)
+        self.entry_senha.place(x=250, y=265)
+
+
+        self.bcadastrar = Button(self.janela3, text="CADASTRAR",
+                             padx=17, pady=19, width=20,
+                             font=('BigNoodleTitling', 26),
+                             bg='#e6ac00', fg='black',
+                             activebackground='#660080',
+                             activeforeground='white')
+        self.bcadastrar.place(x=250, y=320)
+
+        self.bvolte = Button(self.janela3, text="VOLTAR",
+                                padx=17, pady=19, width=20,
+                                font=('BigNoodleTitling', 26),
+                                bg='#e6ac00', fg='black',
+                                activebackground='#660080',
+                                activeforeground='white', command=self.login)
+        self.bvolte.place(x=250, y=450)
+
+        # ------------------------------------- BOTÃO DE PRSONALIZAR ------------------------------------- #
+
+
+    def adicionarQuestoes(self):
+        self.janelap = Tk()
+        self.janelap.iconbitmap('imagens/logojogo.ico')
+        self.janelap.geometry('800x600+275+50')
+        self.janelap.title('ADICIONE NOVAS PERGUNTAS')
+        self.janelap.resizable(width=False, height=False)
+
+        labelPerg = Label(self.janelap, text='ESCREVA A FRASE DA QUESTÃO',
+                          font=('BigNoodleTitling', 20))
+        labelPerg.place(x=285, y=15)
+
+        labelRespErrada = Label(self.janelap, text='ESCREVA AS ALTERNATIVAS INCORRETAS',
+                                font=('BigNoodleTitling', 20))
+        labelRespErrada.place(x=250, y=130)
+
+        labelRespCorreta = Label(self.janelap, text='ESCREVA A ALTERNATIVA CORRETA',
+                                 font=('BigNoodleTitling', 20))
+        labelRespCorreta.place(x=275, y=350)
+
+        self.box1 = Entry(self.janelap,
+                          font=('BigNoodleTitling', 30),
+                          bg='white',
+                          fg='black',
+                          width=45,
+                          justify='center',
+                          highlightbackground="#37d3ff")
+        self.box1.place(x=60, y=65)
+
+        self.box2 = Entry(self.janelap,
+                          font=("BigNoodleTitling", 26),
+                          width=24, justify='center',
+                          bg='#cc0000', fg='white'
+                          )
+
+        self.box2.place(x=230, y=180)
+
+        self.box3 = Entry(self.janelap,
+                          font=("BigNoodleTitling", 26),
+                          width=24, justify='center',
+                          bg='#cc0000', fg='white'
+                          )
+        self.box3.place(x=230, y=230)
+
+        self.box4 = Entry(self.janelap,
+                          font=("BigNoodleTitling", 26),
+                          width=24, justify='center',
+                          bg='#cc0000', fg='white'
+                          )
+        self.box4.place(x=230, y=280)
+
+        self.box5 = Entry(self.janelap,
+                          font=("BigNoodleTitling", 26),
+                          width=24, justify='center',
+                          bg='#004d00', fg='white')
+
+        self.box5 = Entry(self.janelap,
+                          font=("BigNoodleTitling", 26),
+                          width=24, justify='center',
+                          bg='#004d00', fg='white'
+                          )
+        self.box5.place(x=230, y=390)
+
+        #----------------------------------------- BOTÃO DE ADICIONAR ---------------------------------------- #
+
+
+        self.BotAdicionar = Button(self.janelap, text="ADICIONAR", width=20, height=1,
+                                   font=('BigNoodleTitling', 25),
+                                   bg='#003300', fg='white',
+                                   activebackground='#006622',
+                                   activeforeground='white', command=self.adicionando)
+        self.BotAdicionar.place(x=130, y=520)
+
+        #----------------------------------------- BOTÃO DE FECHAR ---------------------------------------- #
+
+
+        self.BotFechar = Button(self.janelap, text="FECHAR", width=20, height=1,
+                                font=('BigNoodleTitling', 25),
+                                bg='#990000', fg='white',
+                                activebackground='#e60000',
+                                activeforeground='white', command=self.janelap.destroy)
+        self.BotFechar.place(x=420, y=520)
+
+        self.BotAdicionar.bind('<Enter>', self.hover3)
+        self.BotAdicionar.bind('<Leave>', self.hover_leave3)
+        self.BotFechar.bind('<Enter>', self.hover4)
+        self.BotFechar.bind('<Leave>', self.hover_leave4)
+
+    def hover3(self, e):
+        self.BotAdicionar.configure(bg='green')
+
+    def hover_leave3(self, e):
+        self.BotAdicionar.configure(bg='#003300')
+
+    def hover4(self, e):
+        self.BotFechar.configure(bg='red')
+
+    def hover_leave4(self, e):
+        self.BotFechar.configure(bg='#990000')
+
+    def adicionando(self):
+
+        b1 = self.box1.get()
+        b2 = self.box2.get()
+        b3 = self.box3.get()
+        b4 = self.box4.get()
+        b5 = self.box5.get()
+
+        self.novas = [b1, b2, b3, b4, b5]
+
+        if b1 == '':
+            messagebox.showerror("ERRO", "VOCÊ NÃO PREENCHEU TODOS OS CAMPOS!", parent=self.janelap)
+
+        elif b2 == '':
+            messagebox.showerror("ERRO", "VOCÊ NÃO PREENCHEU TODOS OS CAMPOS!", parent=self.janelap)
+
+        elif b3 == '':
+            messagebox.showerror("ERRO", "VOCÊ NÃO PREENCHEU TODOS OS CAMPOS!", parent=self.janelap)
+
+        elif b4 == '':
+            messagebox.showerror("ERRO", "VOCÊ NÃO PREENCHEU TODOS OS CAMPOS!", parent=self.janelap)
+
+        elif b5 == '':
+            messagebox.showerror("ERRO", "VOCÊ NÃO PREENCHEU TODOS OS CAMPOS!", parent=self.janelap)
+
+        else:
+            questoes.append(self.novas)
+            messagebox.showinfo("SUCESSO", "QUESTÃO ADICIONADA COM SUCESSO!", parent=self.janelap)
 
     def criarQuiz(self):
-        self.label2.destroy()
-        self.Sair.destroy()
+        self.janelao.destroy()
         q = IniciarJogo(questoes)
 
     def criarQuiz2(self):
-        self.label2.destroy()
-        self.Sair.destroy()
-        m = Adicionar(questoes1)
+        self.janela1.destroy()
+        q = IniciarJogo(questoes)
+
+    def delete(self):
+        self.janela1.destroy()
+        janela.destroy()
 
 # FUNÇÃO PARA CRIAR O MENU
 def criarMenu():
     musicaJogo()
-
     m = Menu()
+
+criarMenu()
+
+janela.mainloop()
