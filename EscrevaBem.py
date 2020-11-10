@@ -67,6 +67,7 @@ def desmutar():
     mute.place(x=5, y=6)
 
 # DEPÓSITO DE PERGUNTAS
+
 questoes = [["IREI AO RESTAURANTE...", "ALMOSSAR", "AUMOÇAR", "AUMOSSAR", "ALMOÇAR"],
                 ["IREI CONTATAR MEU...", "ADEVOGADO", "ADIVOGADO", "ADIVOGADU", "ADVOGADO"],
                 ["COMPREI 200 GRAMAS DE...", "MORTADELLA", "MORTANDELA", "MOTADELA", "MORTADELA"],
@@ -101,13 +102,14 @@ class IniciarJogo:
         # CONTADOR DE RESPOSTAS ERRADAS
         self.errada = 0
 
-        # BOTÃO DE AVANÇAR
+        #------------------------------------- BOTÃO DE AVANÇAR ---------------------------------#
+
         self.avancar = Button(janela, width=7, height=1,
-                              text="Próxima",
-                              bg='blue',
-                              fg='white',
-                              font=("BigNoodleTitling", 22),
-                              command=self.Questao)
+                      text="Próxima",
+                      bg='blue',
+                      fg='white',
+                      font=("BigNoodleTitling", 22),
+                      command=self.Questao)
 
         # TOTAL DE PERGUNTAS
         self.numero = 0
@@ -116,7 +118,7 @@ class IniciarJogo:
 
     # AVANÇAR QUESTÃO
     def Questao(self):
-        self.avancar.place(x=352, y=510)
+        self.avancar.place(x=352, y=1000)
 
         # RANDOMIZADOR DE PERGUNTAS
         if len(self.Perguntar) > 0 and self.numero < self.totalPerg:
@@ -250,13 +252,15 @@ class IniciarJogo:
                 pygame.mixer.music.load('sons/errado.mp3')
                 pygame.mixer.music.play()
                 self.errada += 1
+                self.avancar.place(x=352, y=510)
             else:
                 self.opcao1.configure(bg='#006622', fg='#f2f2f2')
                 pygame.mixer.music.load('sons/correto.mp3')
                 pygame.mixer.music.play()
                 self.correta += 1
-            self.BtProxQuestao.configure(bg='#006622')
-            self.travar = True
+                self.BtProxQuestao.configure(bg='#006622')
+                self.travar = True
+                self.avancar.place(x=352, y=510)
 
     def fiscalizar2(self):
         if not self.travar:
@@ -265,13 +269,16 @@ class IniciarJogo:
                 pygame.mixer.music.load('sons/errado.mp3')
                 pygame.mixer.music.play()
                 self.errada += 1
+                self.avancar.place(x=352, y=510)
+
             else:
                 self.opcao2.configure(bg='#006622', fg='#f2f2f2')
                 pygame.mixer.music.load('sons/correto.mp3')
                 pygame.mixer.music.play()
                 self.correta += 1
-            self.BtProxQuestao.configure(bg='#006622')
-            self.travar = True
+                self.BtProxQuestao.configure(bg='#006622')
+                self.travar = True
+                self.avancar.place(x=352, y=510)
 
     def fiscalizar3(self):
         if not self.travar:
@@ -280,13 +287,16 @@ class IniciarJogo:
                 pygame.mixer.music.load('sons/errado.mp3')
                 pygame.mixer.music.play()
                 self.errada += 1
+                self.avancar.place(x=352, y=510)
+
             else:
                 self.opcao3.configure(bg='#006622', fg='#f2f2f2')
                 pygame.mixer.music.load('sons/correto.mp3')
                 pygame.mixer.music.play()
                 self.correta += 1
-            self.BtProxQuestao.configure(bg='#006622')
-            self.travar = True
+                self.BtProxQuestao.configure(bg='#006622')
+                self.travar = True
+                self.avancar.place(x=352, y=510)
 
     def fiscalizar4(self):
         if not self.travar:
@@ -295,13 +305,16 @@ class IniciarJogo:
                 pygame.mixer.music.load('sons/errado.mp3')
                 pygame.mixer.music.play()
                 self.errada += 1
+                self.avancar.place(x=352, y=510)
+
             else:
                 self.opcao4.configure(bg='#006622', fg='#f2f2f2')
                 pygame.mixer.music.load('sons/correto.mp3')
                 pygame.mixer.music.play()
                 self.correta += 1
-            self.BtProxQuestao.configure(bg='#006622')
-            self.travar = True
+                self.BtProxQuestao.configure(bg='#006622')
+                self.travar = True
+                self.avancar.place(x=352, y=510)
 
 # ADICIONAR PERGUNTAS
 
@@ -353,6 +366,7 @@ class Menu:
         self.Opcao1.configure(bg='#e6ac00')
 
     def selecionarJogador(self):
+
         self.janelao = Tk()
         self.janelao.iconbitmap('imagens/logojogo.ico')
         self.janelao.geometry('800x600+275+50')
@@ -573,7 +587,7 @@ class Menu:
                                 font=('BigNoodleTitling', 26),
                                 bg='#e6ac00', fg='black',
                                 activebackground='#660080',
-                                activeforeground='white', command=self.login)
+                                activeforeground='white', command=self.janela3.destroy)
         self.bvolte.place(x=250, y=450)
 
         # ------------------------------------- BOTÃO DE PRSONALIZAR ------------------------------------- #
@@ -722,6 +736,7 @@ class Menu:
 
     def delete(self):
         self.janela1.destroy()
+        self.janela2.destroy()
         janela.destroy()
 
 # FUNÇÃO PARA CRIAR O MENU
