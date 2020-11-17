@@ -1,3 +1,5 @@
+''' blá blá blá!!!'''
+
 import random
 from tkinter import *
 import pygame
